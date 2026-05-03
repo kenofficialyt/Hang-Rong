@@ -29,15 +29,26 @@ public class GUIListener implements Listener {
         Inventory top = event.getView().getTopInventory();
         Vendor vendor = plugin.getGuiManager().getOpenGuis().get(top);
 
-        if (vendor == null) return;
+        String viewTitle = event.getView().getTitle();
+        String vendorTitlePrefix = net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', 
+                plugin.getConfigManager().getString("gui.title")).split("%")[0];
+        
+        boolean isVendorGUI = (vendor != null) || (viewTitle.startsWith(vendorTitlePrefix));
 
-        String viewTitle = ChatColor.stripColor(event.getView().getTitle());
+        if (isVendorGUI) {
+            event.setCancelled(true);
+            if (vendor == null) {
+                event.getWhoClicked().closeInventory();
+                return;
+            }
+        } else {
+            return;
+        }
+
         if (viewTitle.startsWith(BULK_TITLE_PREFIX)) {
             handleBulkSelectClick(event, vendor);
             return;
         }
-
-        event.setCancelled(true);
 
         Player player = (Player) event.getWhoClicked();
         ItemStack clicked = event.getCurrentItem();

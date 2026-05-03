@@ -4,6 +4,7 @@ import com.hangrong.HangRong;
 import com.hangrong.vendor.Vendor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.ArmorStand;
@@ -14,7 +15,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.Color;
 
 import java.util.Map;
 import java.util.UUID;
@@ -33,6 +37,19 @@ public class NPCManager implements Listener {
         this.clickCooldowns = new ConcurrentHashMap<>();
         this.VENDOR_KEY = new NamespacedKey(plugin, "vendor_id");
         Bukkit.getPluginManager().registerEvents(this, plugin);
+        cleanupAllNPCs();
+    }
+
+    private void cleanupAllNPCs() {
+        for (var world : Bukkit.getWorlds()) {
+            for (Entity entity : world.getEntities()) {
+                if (entity.getPersistentDataContainer().has(VENDOR_KEY, PersistentDataType.STRING)) {
+                    entity.remove();
+                }
+            }
+        }
+        entityToVendor.clear();
+        plugin.getLogger().info("Da cleanup NPCs cu!");
     }
 
     public void createVendorNPC(Vendor vendor) {
@@ -46,10 +63,20 @@ public class NPCManager implements Listener {
         npc.setVisible(true);
         npc.setInvulnerable(true);
         npc.setGravity(false);
-        npc.setBasePlate(false);
+        npc.setBasePlate(true);
         npc.setAI(false);
         npc.setSilent(true);
         npc.setMarker(false);
+        
+        // Give leather armor to make it visible
+        ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
+        LeatherArmorMeta meta = (LeatherArmorMeta) chestplate.getItemMeta();
+        if (meta != null) {
+            meta.setColor(Color.fromRGB(0, 128, 255));
+            chestplate.setItemMeta(meta);
+        }
+        npc.getEquipment().setChestplate(chestplate);
+        
         npc.getPersistentDataContainer().set(VENDOR_KEY, PersistentDataType.STRING, vendor.getId());
 
         entityToVendor.put(npc.getUniqueId(), vendor.getId());
