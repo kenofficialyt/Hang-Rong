@@ -121,4 +121,4 @@ MIT License
 
 ---
 
-Made with ❤️ by [kenofficialyt](https://github.com/kenofficialyt)
+Made with ❤️ by [THT](https://github.com/kenofficialyt)

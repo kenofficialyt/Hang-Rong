@@ -2,7 +2,7 @@ name: HangRong
 version: '1.0.0'
 main: com.hangrong.HangRong
 api-version: '1.18'
-author: HangRongDev
+author: THT
 description: Plugin cho phep nguoi choi buoc ban di dong voi NPC
 folia-supported: false
 
