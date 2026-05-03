@@ -1,0 +1,48 @@
+name: HangRong
+version: '1.0.0'
+main: com.hangrong.HangRong
+api-version: '1.18'
+author: HangRongDev
+description: Plugin cho phep nguoi choi buoc ban di dong voi NPC
+folia-supported: false
+
+softdepend: [Vault, PlayerPoints, FancyNpcs, FancyHolograms]
+
+commands:
+  hangrong:
+    description: Lenh chinh cua plugin HangRong
+    usage: /<command> [subcommand]
+    aliases: [hr, hang]
+    permission: hangrong.use
+
+permissions:
+  hangrong.use:
+    description: Quyen su dung co ban
+    default: true
+  hangrong.create:
+    description: Tao sạp hang
+    default: true
+  hangrong.delete:
+    description: Xoa sạp hang cua ban
+    default: true
+  hangrong.sell:
+    description: Ban hang tren sạp
+    default: true
+  hangrong.admin:
+    description: Quyen admin
+    default: op
+  hangrong.admin.reload:
+    description: Reload config
+    default: op
+  hangrong.admin.others:
+    description: Xem thong tin sạp hang nguoi khac
+    default: op
+  hangrong.admin.delete:
+    description: Xoa sạp hang bat ky
+    default: op
+  hangrong.admin.settax:
+    description: Dat thue tuy chinh
+    default: op
+  hangrong.admin.bypass-tax:
+    description: Mien thue
+    default: op
