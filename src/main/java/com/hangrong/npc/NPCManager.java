@@ -43,13 +43,13 @@ public class NPCManager implements Listener {
         ArmorStand npc = (ArmorStand) loc.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
         npc.setCustomName("§6§l[ " + vendor.getId() + " ]");
         npc.setCustomNameVisible(true);
-        npc.setVisible(false);
+        npc.setVisible(true);
         npc.setInvulnerable(true);
         npc.setGravity(false);
         npc.setBasePlate(false);
-        npc.setMarker(true);
         npc.setAI(false);
         npc.setSilent(true);
+        npc.setMarker(false);
         npc.getPersistentDataContainer().set(VENDOR_KEY, PersistentDataType.STRING, vendor.getId());
 
         entityToVendor.put(npc.getUniqueId(), vendor.getId());

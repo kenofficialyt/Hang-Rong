@@ -36,6 +36,10 @@ public class VendorManager {
                 Vendor vendor = Vendor.deserialize(data);
                 vendors.put(vendor.getId(), vendor);
                 npcIdToVendor.put(vendor.getNpcId(), vendor.getId());
+                
+                // Spawn NPC and Hologram for loaded vendors
+                plugin.getNpcManager().createVendorNPC(vendor);
+                plugin.getHologramManager().createVendorHologram(vendor);
             } catch (Exception e) {
                 plugin.getLogger().warning("Không thể load vendor " + key + ": " + e.getMessage());
             }
