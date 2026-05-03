@@ -117,7 +117,7 @@ Mọi đóng góp đều được chào đón! Hãy tạo Issue hoặc Pull Requ
 
 ## 📄 License
 
-MIT License
+GPL License
 
 ---
 
