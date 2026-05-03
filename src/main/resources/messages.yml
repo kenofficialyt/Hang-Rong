@@ -39,6 +39,7 @@ messages:
   help-list: "&e/hr list&7 - Xem danh sách sạp hàng"
   help-info: "&e/hr info <tên>&7 - Xem thông tin sạp"
   help-history: "&e/hr history [tên]&7 - Xem lịch sử giao dịch"
+  help-reload: "&e/hr reload&7 - Reload plugin"
   help-admin: "&e/hr admin [reload|settax|delete]&7 - Lệnh admin"
   help-footer: "&6===================="
   bulk-purchase-info: "&eMua &f%amount%&e cái = &a$%price% &7(giảm &c%discount%%%"

@@ -26,7 +26,7 @@ public class VendorTabCompleter implements TabCompleter {
         List<String> completions = new ArrayList<>();
 
         if (args.length == 1) {
-            String[] mainCommands = {"create", "delete", "sell", "price", "stock", "remove", "list", "info", "history"};
+            String[] mainCommands = {"create", "delete", "sell", "price", "stock", "remove", "list", "info", "history", "reload"};
             if (player.hasPermission("hangrong.admin")) {
                 completions.add("admin");
             }

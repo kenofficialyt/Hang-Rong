@@ -44,6 +44,7 @@ public class HangRongCommand implements CommandExecutor {
             case "list" -> handleList(player);
             case "info" -> handleInfo(player, args);
             case "history" -> handleHistory(player, args);
+            case "reload" -> handleReload(player);
             case "admin" -> handleAdmin(player, args);
             default -> showHelp(player);
         }
@@ -353,6 +354,22 @@ public class HangRongCommand implements CommandExecutor {
         }
     }
 
+    private void handleReload(Player player) {
+        if (!player.hasPermission("hangrong.admin.reload")) {
+            plugin.getMessages().send(player, "messages.no-permission");
+            return;
+        }
+
+        plugin.getConfigManager().reload();
+        plugin.getMessages().reload();
+        plugin.getVendorManager().loadVendors();
+        plugin.getHologramManager().removeAllHolograms();
+        for (Vendor vendor : plugin.getVendorManager().getAllVendors().values()) {
+            plugin.getHologramManager().createVendorHologram(vendor);
+        }
+        plugin.getMessages().send(player, "messages.reload-success");
+    }
+
     private void handleAdmin(Player player, String[] args) {
         if (!player.hasPermission("hangrong.admin")) {
             plugin.getMessages().send(player, "messages.no-permission");
@@ -417,6 +434,7 @@ public class HangRongCommand implements CommandExecutor {
         plugin.getMessages().send(player, "messages.help-list");
         plugin.getMessages().send(player, "messages.help-info");
         plugin.getMessages().send(player, "messages.help-history");
+        plugin.getMessages().send(player, "messages.help-reload");
         plugin.getMessages().send(player, "messages.help-admin");
         plugin.getMessages().send(player, "messages.help-footer");
     }
