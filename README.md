@@ -26,12 +26,25 @@ Plugin Minecraft cho phép người chơi tạo sạp hàng rong di động, mua
 
 ## 🎮 Cách dùng
 
-### Tạo sạp hàng
+### Người chơi
 ```
-/hr create <tên>    # Tạo sạp hàng mới tại vị trí đứng
-/hr delete <tên>    # Xóa sạp hàng
-/hr list            # Xem danh sách sạp hàng
-/hr additem <tên> <giá> <số lượng>  # Thêm mặt hàng
+/hr create <tên>                          # Tạo sạp hàng mới
+/hr delete <tên>                          # Xóa sạp hàng của mình
+/hr list                                  # Xem danh sách sạp hàng
+/hr sell <tên> <giá> <số lượng>           # Bán vật phẩm đang cầm
+/hr price <tên> <mục> <giá mới>           # Đổi giá mặt hàng
+/hr stock <tên> <mục> <số lượng mới>      # Đổi số lượng tồn kho
+/hr remove <tên> <mục>                    # Xóa mặt hàng khỏi sạp
+/hr info <tên>                            # Xem thông tin sạp hàng
+/hr history [tên]                         # Xem lịch sử giao dịch
+/hr reload                                # Reload config (admin)
+```
+
+### Admin
+```
+/hr admin reload                          # Reload plugin
+/hr admin settax <tên sạp> <% thuế>       # Đặt thuế tùy chỉnh cho sạp
+/hr admin delete <tên người chơi>         # Xóa tất cả sạp của người chơi
 ```
 
 ### Mua hàng
@@ -78,12 +91,23 @@ vendor:
 
 ## 📦 Permissions
 
+### Người chơi
 | Permission | Mô tả |
 |---|---|
+| `hangrong.use` | Sử dụng plugin cơ bản |
 | `hangrong.create` | Tạo sạp hàng |
-| `hangrong.delete` | Xóa sạp hàng |
-| `hangrong.admin.*` | Tất cả quyền admin |
-| `hangrong.admin.bypass-tax` | Miễn thuế |
+| `hangrong.delete` | Xóa sạp hàng của mình |
+| `hangrong.sell` | Bán vật phẩm trên sạp |
+
+### Admin
+| Permission | Mô tả |
+|---|---|
+| `hangrong.admin` | Truy cập lệnh admin |
+| `hangrong.admin.reload` | Reload plugin |
+| `hangrong.admin.others` | Xem/sửa sạp hàng người khác |
+| `hangrong.admin.delete` | Xóa sạp hàng bất kỳ |
+| `hangrong.admin.settax` | Đặt thuế tùy chỉnh |
+| `hangrong.admin.bypass-tax` | Miễn thuế khi mua |
 
 ## 🔄 Changelog
 
@@ -96,7 +120,7 @@ vendor:
 
 ## 📝 License
 
-[GPL License](LICENSE)
+[MIT License](LICENSE)
 
 ## 👤 Author
 
