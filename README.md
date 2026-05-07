@@ -96,7 +96,7 @@ vendor:
 
 ## 📝 License
 
-[MIT License](LICENSE)
+[GPL License](LICENSE)
 
 ## 👤 Author
 
