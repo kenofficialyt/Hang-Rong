@@ -15,14 +15,14 @@ tax:
 npc:
   hologram-enabled: true
   hologram-update-interval: 5
-  hologram-line-height: 0.35
-  hologram-display-limit: 5
+  hologram-line-height: 0.4
+  hologram-display-limit: 3
   click-cooldown: 1.0
   skin: "default"
 
 gui:
   rows: 4
-  title: "&6&lSạp hàng của %seller%"
+  title: "&6&lSáº¡p hÃ ng cá»§a %seller%"
   fill-empty-slots: true
   filler-item: "GRAY_STAINED_GLASS_PANE"
   filler-name: "&7"
@@ -33,10 +33,10 @@ gui:
     - ""
     - "&7Mua &f8 &7cai = &a$%bulk_price% &7(giam &c%discount%%%"
     - ""
-    - "&eClick để mua!"
-  out-of-stock-name: "&c%s% &7- &cHet hàng"
+    - "&eClick Ä‘á»ƒ mua!"
+  out-of-stock-name: "&c%s% &7- &cHet hÃ ng"
   out-of-stock-lore:
-    - "&cMat hàng này đã hết!"
+    - "&cMat hÃ ng nÃ y Ä‘Ã£ háº¿t!"
 
 bulk-pricing:
   enabled: true

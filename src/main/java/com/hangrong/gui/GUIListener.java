@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class GUIListener implements Listener {
 
     private final HangRong plugin;
-    private final String BULK_TITLE_PREFIX = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', "&6Chọn số lượng"));
+    private final String BULK_TITLE_PREFIX = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', "&6Chá»n sá»‘ lÆ°á»£ng"));
 
     public GUIListener(HangRong plugin) {
         this.plugin = plugin;
@@ -106,7 +107,7 @@ public class GUIListener implements Listener {
         if (amount == 0) return;
 
         String clickedName = ChatColor.stripColor(clicked.getItemMeta().getDisplayName());
-        String itemDisplayName = clickedName.replaceFirst("^x\\d+ ", "");
+        String itemDisplayName = clickedName.replaceFirst("^\\d+ ", "");
 
         for (VendorItem item : vendor.getItems().values()) {
             if (item.getDisplayName().equalsIgnoreCase(itemDisplayName)) {
@@ -200,5 +201,21 @@ public class GUIListener implements Listener {
     public void onGUIClose(InventoryCloseEvent event) {
         Inventory top = event.getView().getTopInventory();
         plugin.getGuiManager().getOpenGuis().remove(top);
+    }
+
+    @EventHandler
+    public void onGUIDrag(InventoryDragEvent event) {
+        Inventory top = event.getView().getTopInventory();
+        Vendor vendor = plugin.getGuiManager().getOpenGuis().get(top);
+
+        String viewTitle = event.getView().getTitle();
+        String vendorTitlePrefix = net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', 
+                plugin.getConfigManager().getString("gui.title")).split("%")[0];
+        
+        boolean isVendorGUI = (vendor != null) || (viewTitle.startsWith(vendorTitlePrefix)) || viewTitle.startsWith(BULK_TITLE_PREFIX);
+
+        if (isVendorGUI) {
+            event.setCancelled(true);
+        }
     }
 }

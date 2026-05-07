@@ -69,7 +69,7 @@ public class HologramManager {
         }
 
         vendorHolograms.put(vendor.getId(), hologramEntities);
-        plugin.getLogger().info("Da tao hologram cho sạp hàng: " + vendor.getId());
+        plugin.getLogger().info("Da tao hologram cho sáº¡p hÃ ng: " + vendor.getId());
     }
 
     public void removeHologram(String vendorId) {
@@ -87,22 +87,32 @@ public class HologramManager {
     public void updateHologram(Vendor vendor) {
         if (!plugin.getConfigManager().getBoolean("npc.hologram-enabled")) return;
         
-        int currentIndex = rotationIndices.getOrDefault(vendor.getId(), 0);
         int totalItems = vendor.getItemCount();
         int limit = plugin.getConfigManager().getInt("npc.hologram-display-limit");
+        int currentIndex = rotationIndices.getOrDefault(vendor.getId(), 0);
         
         if (totalItems > limit) {
             currentIndex = (currentIndex + 1) % totalItems;
-            rotationIndices.put(vendor.getId(), currentIndex);
         } else {
             currentIndex = 0;
         }
 
-        removeHologram(vendor.getId());
+        rotationIndices.put(vendor.getId(), currentIndex);
         List<String> lines = getHologramLines(vendor, currentIndex);
         
+        List<Entity> existingEntities = vendorHolograms.get(vendor.getId());
+        if (existingEntities != null && !existingEntities.isEmpty()) {
+            for (int i = 0; i < existingEntities.size() && i < lines.size(); i++) {
+                Entity entity = existingEntities.get(i);
+                entity.setCustomName(ChatColor.translateAlternateColorCodes('&', lines.get(i)));
+            }
+            return;
+        }
+
+        removeHologram(vendor.getId());
+        
         Location baseLoc = vendor.getLocation().clone();
-        baseLoc.add(0, 2.8, 0);
+        baseLoc.add(0, 2.5, 0);
         
         List<Entity> hologramEntities = new ArrayList<>();
         double lineHeight = plugin.getConfigManager().getDouble("npc.hologram-line-height");
@@ -139,35 +149,29 @@ public class HologramManager {
     private List<String> getHologramLines(Vendor vendor, int startIndex) {
         List<String> lines = new ArrayList<>();
         lines.add("&6&l" + vendor.getId());
-        lines.add("&7─────────────");
 
         int limit = plugin.getConfigManager().getInt("npc.hologram-display-limit");
         List<VendorItem> items = new ArrayList<>(vendor.getItems().values());
         int totalItems = items.size();
 
         if (totalItems == 0) {
-            lines.add("&7Chưa có mặt hàng nào!");
+            lines.add("&7Chua co mat hang nao!");
         } else {
-            for (int i = 0; i < limit && i < totalItems; i++) {
+            int displayCount = Math.min(limit, totalItems);
+            for (int i = 0; i < displayCount; i++) {
                 int itemIndex = (startIndex + i) % totalItems;
                 VendorItem item = items.get(itemIndex);
                 
                 String stockText = item.hasStock()
                         ? "&a" + item.getStock()
-                        : "&cHet hàng";
-                lines.add("&7" + item.getDisplayName() + " &e" + plugin.getEconomyManager().format(item.getPrice())
-                        + " " + stockText);
+                        : "&cHet hang";
+                lines.add("&7" + item.getDisplayName() + ": &e" + plugin.getEconomyManager().format(item.getPrice()) + " (" + stockText + "&7)");
+            }
+            if (totalItems > limit) {
+                lines.add("&7... +" + (totalItems - limit) + " items");
             }
         }
 
-        if (totalItems > limit) {
-            int currentOffset = startIndex + limit;
-            if (currentOffset < totalItems) {
-                 lines.add("&7... &7+&f" + (totalItems - limit) + " &7items &7(xem thêm)");
-            }
-        }
-
-        lines.add("&e&lClick để mua!");
         return lines;
     }
 

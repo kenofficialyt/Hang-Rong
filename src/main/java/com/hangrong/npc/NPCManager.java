@@ -58,29 +58,49 @@ public class NPCManager implements Listener {
         loc.setPitch(0);
 
         ArmorStand npc = (ArmorStand) loc.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
-        npc.setCustomName("§6§l[ " + vendor.getId() + " ]");
+        npc.setCustomName("Â§6Â§l[ NgÆ°á»i BÃ¡n - " + vendor.getId() + " ]");
         npc.setCustomNameVisible(true);
-        npc.setVisible(true);
+        npc.setVisible(false);
         npc.setInvulnerable(true);
         npc.setGravity(false);
-        npc.setBasePlate(true);
+        npc.setBasePlate(false);
         npc.setAI(false);
         npc.setSilent(true);
-        npc.setMarker(false);
+        npc.setMarker(true);
+        npc.setArms(true);
+        npc.setSmall(false);
         
-        // Give leather armor to make it visible
+        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
+        npc.getEquipment().setHelmet(head);
+        
         ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
-        LeatherArmorMeta meta = (LeatherArmorMeta) chestplate.getItemMeta();
-        if (meta != null) {
-            meta.setColor(Color.fromRGB(0, 128, 255));
-            chestplate.setItemMeta(meta);
+        LeatherArmorMeta chestMeta = (LeatherArmorMeta) chestplate.getItemMeta();
+        if (chestMeta != null) {
+            chestMeta.setColor(Color.fromRGB(139, 69, 19));
+            chestplate.setItemMeta(chestMeta);
         }
         npc.getEquipment().setChestplate(chestplate);
+        
+        ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
+        LeatherArmorMeta legMeta = (LeatherArmorMeta) leggings.getItemMeta();
+        if (legMeta != null) {
+            legMeta.setColor(Color.fromRGB(139, 69, 19));
+            leggings.setItemMeta(legMeta);
+        }
+        npc.getEquipment().setLeggings(leggings);
+        
+        ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
+        LeatherArmorMeta bootMeta = (LeatherArmorMeta) boots.getItemMeta();
+        if (bootMeta != null) {
+            bootMeta.setColor(Color.fromRGB(50, 50, 50));
+            boots.setItemMeta(bootMeta);
+        }
+        npc.getEquipment().setBoots(boots);
         
         npc.getPersistentDataContainer().set(VENDOR_KEY, PersistentDataType.STRING, vendor.getId());
 
         entityToVendor.put(npc.getUniqueId(), vendor.getId());
-        plugin.getLogger().info("Da tao NPC cho sạp hàng: " + vendor.getId() + " (Entity: " + npc.getUniqueId() + ")");
+        plugin.getLogger().info("Da tao NPC cho sáº¡p hÃ ng: " + vendor.getId() + " (Entity: " + npc.getUniqueId() + ")");
     }
 
     public void removeVendorNPC(Vendor vendor) {
